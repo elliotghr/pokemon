@@ -1,3 +1,6 @@
+import { typesObject } from "./typesObject.js";
+import { getHtml } from "./includeHtml.js";
+
 let d = document,
   $pokemonContainer = d.getElementById("pokemon-container"),
   $target = d.getElementById("target"),
@@ -15,6 +18,7 @@ const pokemonAPI = `https://pokeapi.co/api/v2/pokemon`;
 const typeFilters = new Set();
 
 d.addEventListener("DOMContentLoaded", (e) => {
+  getHtml();
   renderPokemon(pokemonAPI, 0);
   handleIntersectionObserver();
   handleMutationObserver();
@@ -71,6 +75,7 @@ const renderPokemon = async (url, offset = 0, limit = 20) => {
         name.textContent = json.name;
         hp.textContent = `${json.stats[0].base_stat} HP`;
         type.textContent = `${json.types[0].type.name}`;
+        divImageContainer.classList.add(typesObject[type.textContent]);
         // stats content
         attack.textContent = `Attack ${json.stats[1].base_stat}`;
         defense.textContent = `Defense ${json.stats[2].base_stat}`;
